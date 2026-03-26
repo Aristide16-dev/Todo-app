@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light, dark;
+}
+
+/* Transitions fluides pour le changement de thème */
+* {
+  transition:
+    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animation pour le bouton de thème */
+.swap {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.swap:has(.theme-controller:checked) {
+  transform: rotate(360deg);
+}
+
+/* Animation des icônes soleil/lune */
+.swap-on,
+.swap-off {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.theme-controller:not(:checked) ~ .swap-off {
+  transform: rotateY(0deg) scale(1);
+  opacity: 1;
+}
+
+.theme-controller:not(:checked) ~ .swap-on {
+  opacity: 1;
+  transform: rotateY(0deg) scale(1);
+}
+
+.theme-controller:not(:checked) ~ .swap-off {
+  opacity: 0;
+  transform: rotateY(-180deg) scale(0);
+}
+
+.theme-controller:checked ~ .swap-off {
+  opacity: 1;
+  transform: rotateY(0deg) scale(1);
+}
+
+.theme-controller:checked ~ .swap-on {
+  opacity: 0;
+  transform: rotateY(180deg) scale(0);
+}
+
+/* Animation spécifique pour les éléments DaisyUI */
+.btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input,
+.select {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.badge {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animation pour le conteneur principal */
+.bg-base-300 {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Effet de fondu pour les changements de thème */
+[data-theme="light"] *,
+[data-theme="dark"] * {
+  animation: themeTransition 0.4s ease-in-out;
+}
+
+@keyframes themeTransition {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.1);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
